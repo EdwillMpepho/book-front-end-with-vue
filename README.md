@@ -1,5 +1,9 @@
-# vuexeg4
-
+# vuexeg4 - Book front end application
+This is the front-end application for laravel crud book application 
+it use vue framework as a front end it working pefect
+forgive me about the application naming because I have lot of projects with books
+When I design this application I did not care that much about the design all I care
+about is functionality and the validations
 ## Project setup
 ```
 npm install

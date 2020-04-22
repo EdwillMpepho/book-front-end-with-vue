@@ -75,6 +75,47 @@ const actions = {
     })
         
    },
+   addBook(context,book) {
+    axios.defaults.headers.common['Authorization']='Bearer '+state.loginToken.token;
+    return new Promise((resolve, reject) => {
+        axios.post('http://vuex-app.test/api/Book',
+         {title: book.title, body: book.body})
+        .then((response) => {
+            context.commit('addNewBook',response.data);
+            resolve(response);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+   },
+   updateBook(context, book) {
+    axios.defaults.headers.common['Authorization']='Bearer '+state.loginToken.token;
+    return new Promise((resolve, reject) => {
+        axios.put('http://vuex-app.test/api/Book/'+book.id,
+         {title: book.title, body: book.body})
+        .then((response) => {
+            context.commit('updateUserBook',response.data);
+            resolve(response);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+   },
+   deleteTheBook(context, id) {
+    axios.defaults.headers.common['Authorization']='Bearer '+state.loginToken.token;
+    return new Promise((resolve, reject) => {
+      axios.delete('http://vuex-app.test/api/Book/'+id)
+      .then((response) => {
+          context.commit('deleteBook',response.data);
+          resolve(response);
+      })
+      .catch((error) => {
+          reject(error);
+      })
+    })
+   },
    
    
 };
@@ -89,6 +130,16 @@ const mutations = {
   signOut(state) {
       state.loginToken = null;
   },
+  addNewBook(state,book) {
+      state.books.push(book);
+  },
+  updateBook(state,book){
+      state.book = book;
+  },
+  deleteBook(state,book){
+    state.books = state.books.filter((b) => (b.id !== book.id));
+  },
+  
 };
 
 export default{
